@@ -21,7 +21,7 @@ class MediaCloudDataSource() {
 
     suspend fun getImageList(username: String): Result<UserImageList> {
         return try {
-            val images = apiService.getImages(username)
+            val images = apiService.getImages(username, token)
             Result.Success(images)
         } catch (e: Throwable) {
             Result.Error(IOException("Error retrieving images", e))

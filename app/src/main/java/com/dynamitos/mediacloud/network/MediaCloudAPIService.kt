@@ -12,5 +12,5 @@ interface MediaCloudAPIService {
     suspend fun login(@Field("username") username: String, @Field("password") password: String) : String
 
     @GET("/img/{user}")
-    suspend fun getImages(@Path("user") username: String): UserImageList
+    suspend fun getImages(@Path("user") username: String, @Header("Authentication") token: String): UserImageList
 }
