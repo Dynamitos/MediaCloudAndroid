@@ -24,7 +24,7 @@ class LoginViewModel(private val mediaCloudRepository: MediaCloudRepository) : V
 
             if (result is Result.Success) {
                 _loginResult.value =
-                    LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
+                    LoginResult(success = LoggedInUserView(displayName = result.data.displayName, authToken = result.data.authToken))
             } else {
                 _loginResult.value = LoginResult(error = R.string.login_failed)
             }

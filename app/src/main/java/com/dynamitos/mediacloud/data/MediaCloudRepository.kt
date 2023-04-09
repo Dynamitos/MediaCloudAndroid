@@ -1,5 +1,6 @@
 package com.dynamitos.mediacloud.data
 
+import android.content.SharedPreferences
 import com.dynamitos.mediacloud.data.model.LoggedInUser
 
 /**

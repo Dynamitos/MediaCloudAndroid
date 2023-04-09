@@ -1,6 +1,7 @@
 package com.dynamitos.mediacloud.ui.login
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -17,18 +18,14 @@ import com.dynamitos.mediacloud.MainActivity
 import com.dynamitos.mediacloud.databinding.ActivityLoginBinding
 
 import com.dynamitos.mediacloud.R
-import com.dynamitos.mediacloud.network.SessionManager
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        sessionManager = SessionManager(this)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -61,8 +58,9 @@ class LoginActivity : AppCompatActivity() {
             if (loginResult.error != null) {
                 showLoginFailed(loginResult.error)
             }
-            if (loginResult.success != null) {
-                updateUiWithUser(loginResult.success)
+            if(loginResult.success != null) {
+                val prefs = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
+                prefs.edit().putString("auth_token", loginResult.success.authToken).apply();
             }
             setResult(Activity.RESULT_OK)
 
@@ -103,12 +101,6 @@ class LoginActivity : AppCompatActivity() {
                 loginViewModel.login(username.text.toString(), password.text.toString())
             }
         }
-    }
-
-    private fun updateUiWithUser(model: LoggedInUserView) {
-        val welcome = getString(R.string.welcome)
-        val displayName = model.displayName
-
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {

@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dynamitos.mediacloud.data.MediaCloudDataSource
 import com.dynamitos.mediacloud.data.MediaCloudRepository
+import com.dynamitos.mediacloud.network.APIClient
+import com.dynamitos.mediacloud.network.MediaCloudAPIService
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.

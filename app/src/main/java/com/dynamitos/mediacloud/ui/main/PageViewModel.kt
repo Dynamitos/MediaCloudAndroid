@@ -7,8 +7,10 @@ import androidx.lifecycle.ViewModelProvider
 
 class PageViewModel : ViewModel() {
 
-    private val _index = MutableLiveData<Int>()
+    private val _text = MutableLiveData<String>()
+    val text: LiveData<String> = _text
 
+    private val _index = MutableLiveData<Int>()
 
     fun setIndex(index: Int) {
         _index.value = index
