@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dynamitos.mediacloud.data.MediaCloudRepository
+import com.dynamitos.mediacloud.data.LoginRepository
 import com.dynamitos.mediacloud.data.Result
 
 import com.dynamitos.mediacloud.R
 import kotlinx.coroutines.launch
 
-class LoginViewModel(private val mediaCloudRepository: MediaCloudRepository) : ViewModel() {
+class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
@@ -20,7 +20,7 @@ class LoginViewModel(private val mediaCloudRepository: MediaCloudRepository) : V
 
     fun login(username: String, password: String) {
         viewModelScope.launch {
-            val result = mediaCloudRepository.login(username, password)
+            val result = loginRepository.login(username, password)
 
             if (result is Result.Success) {
                 _loginResult.value =

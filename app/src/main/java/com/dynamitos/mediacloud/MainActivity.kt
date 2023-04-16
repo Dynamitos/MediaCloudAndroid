@@ -7,11 +7,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
-import com.dynamitos.mediacloud.data.MediaCloudRepository
 import com.dynamitos.mediacloud.ui.main.SectionsPagerAdapter
 import com.dynamitos.mediacloud.databinding.ActivityMainBinding
 
-class MainActivity(val mediaCloudRepository: MediaCloudRepository) : AppCompatActivity() {
+class MainActivity() : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

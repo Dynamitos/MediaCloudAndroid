@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
-class PageViewModel : ViewModel() {
+class PageViewModel : ViewModel(private val mediacloudRepository: MediaCloudRe) {
 
     private val _text = MutableLiveData<String>()
     val text: LiveData<String> = _text

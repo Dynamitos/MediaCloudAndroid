@@ -1,6 +1,5 @@
 package com.dynamitos.mediacloud.data
 
-import android.content.SharedPreferences
 import com.dynamitos.mediacloud.data.model.LoggedInUser
 
 /**
@@ -8,7 +7,7 @@ import com.dynamitos.mediacloud.data.model.LoggedInUser
  * maintains an in-memory cache of login status and user credentials information.
  */
 
-class MediaCloudRepository(val dataSource: MediaCloudDataSource) {
+class LoginRepository(val dataSource: LoginDataSource) {
 
     // in-memory cache of the loggedInUser object
     var user: LoggedInUser? = null

@@ -2,10 +2,8 @@ package com.dynamitos.mediacloud.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.dynamitos.mediacloud.data.MediaCloudDataSource
-import com.dynamitos.mediacloud.data.MediaCloudRepository
-import com.dynamitos.mediacloud.network.APIClient
-import com.dynamitos.mediacloud.network.MediaCloudAPIService
+import com.dynamitos.mediacloud.data.LoginDataSource
+import com.dynamitos.mediacloud.data.LoginRepository
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.
@@ -17,8 +15,8 @@ class LoginViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             return LoginViewModel(
-                mediaCloudRepository = MediaCloudRepository(
-                    dataSource = MediaCloudDataSource()
+                loginRepository = LoginRepository(
+                    dataSource = LoginDataSource()
                 )
             ) as T
         }
