@@ -3,7 +3,6 @@ package com.dynamitos.mediacloud.network
 import android.app.Service
 import android.content.Intent
 import android.os.*
-import java.lang.Process
 
 class NetworkService : Service() {
 
@@ -20,10 +19,9 @@ class NetworkService : Service() {
     override fun onCreate() {
         super.onCreate()
 
-        HandlerThread("ServiceStartArguments", Process.THREAD_PRIORITY_BACKGROUND).apply {
+        HandlerThread("ServiceStartArguments", Process.THREAD_PRIORITY_DEFAULT).apply {
             start()
 
-            getSharedPreferences()
             serviceLooper = looper
             serviceHandler = ServiceHandler(looper)
         }

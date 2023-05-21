@@ -2,7 +2,6 @@ package com.dynamitos.mediacloud.ui.login
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -14,7 +13,6 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
-import com.dynamitos.mediacloud.MainActivity
 import com.dynamitos.mediacloud.databinding.ActivityLoginBinding
 
 import com.dynamitos.mediacloud.R
@@ -64,8 +62,6 @@ class LoginActivity : AppCompatActivity() {
             }
             setResult(Activity.RESULT_OK)
 
-            val mainIntent = Intent(this, MainActivity::class.java)
-            startActivity(mainIntent)
             //Complete and destroy login activity once successful
             finish()
         })
