@@ -73,8 +73,7 @@ class GalleryWrapper : Fragment(), ImageClickListener {
             object : OnBackPressedCallback(true ) {
                 override fun handleOnBackPressed() {
                     tabs?.visibility = View.VISIBLE
-                    isEnabled = false
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                    parentFragmentManager.popBackStack()
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)

@@ -6,6 +6,7 @@ import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.dynamitos.mediacloud.R
@@ -39,8 +40,15 @@ class GalleryPager : Fragment() {
         val viewPager = view.findViewById<ViewPager>(R.id.view_pager)
         viewPager.adapter = galleryPagerAdapter
         viewPager.currentItem = currentItem ?: 0
+
+        view.findViewById<Button>(R.id.close_button).setOnClickListener {
+            close()
+        }
     }
 
+    fun close() {
+        requireActivity().onBackPressedDispatcher.onBackPressed()
+    }
     companion object {
         fun newInstance(curr: Int, images: List<UserImage>): GalleryPager {
             val fragment = GalleryPager()
