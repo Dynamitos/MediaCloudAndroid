@@ -7,17 +7,20 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.dynamitos.mediacloud.R
 import com.dynamitos.mediacloud.data.Util
 import com.dynamitos.mediacloud.data.model.ImageClickListener
 import com.dynamitos.mediacloud.data.model.ImageGalleryViewModel
 import com.dynamitos.mediacloud.data.model.UserImage
+import com.dynamitos.mediacloud.network.APIClient
+import kotlinx.coroutines.launch
 
 class GalleryWrapper : Fragment(), ImageClickListener {
     private lateinit var viewModel: ImageGalleryViewModel
+    private var images: List<UserImage> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,31 +41,32 @@ class GalleryWrapper : Fragment(), ImageClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val galleryAdapter = GalleryAdapter(Util.getImageData(), this)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
-        val gridLayoutManager = GridLayoutManager(context, 2)
-        recyclerView.layoutManager = gridLayoutManager
-        recyclerView.adapter = galleryAdapter
+        val listener = this
+        lifecycleScope.launch {
+            images = APIClient.apiService.getImages("Dynamitos", "1")
 
-        /*Glide.with(requireContext())
-            .load("http://localhost:3000/img/Dynamitos/Su.jpg")
-            //.thumbnail(0.5f)
-            //.diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(view.findViewById(R.id.testImage))*/
+            val galleryAdapter = GalleryAdapter(images, listener)
+            val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
+            val gridLayoutManager = GridLayoutManager(context, 2)
+            recyclerView.layoutManager = gridLayoutManager
+            recyclerView.adapter = galleryAdapter
+        }
     }
 
     override fun onImageClicked(position: Int, image: UserImage, view: ImageView) {
-        val galleryViewPagerFragment = GalleryPager.newInstance(position, Util.getImageData())
+        lifecycleScope.launch {
+            val galleryViewPagerFragment = GalleryPager.newInstance(position, images)
 
-        parentFragmentManager.beginTransaction()
-            .addSharedElement(view, ViewCompat.getTransitionName(view)!!)
-            .addToBackStack(ImageGallery.TAG)
-            .replace(R.id.content, galleryViewPagerFragment)
-            .commit()
+            parentFragmentManager.beginTransaction()
+                .addSharedElement(view, ViewCompat.getTransitionName(view)!!)
+                .addToBackStack(TAG)
+                .replace(R.id.content, galleryViewPagerFragment)
+                .commit()
+        }
     }
 
     companion object {
-        val TAG = "RecyclerViewFragment"
+        const val TAG = "RecyclerViewFragment"
         fun newInstance() = GalleryWrapper()
     }
 }

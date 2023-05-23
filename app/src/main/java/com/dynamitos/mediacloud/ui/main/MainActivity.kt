@@ -1,4 +1,4 @@
-package com.dynamitos.mediacloud.data
+package com.dynamitos.mediacloud.ui.main
 
 import android.R
 import android.os.Bundle

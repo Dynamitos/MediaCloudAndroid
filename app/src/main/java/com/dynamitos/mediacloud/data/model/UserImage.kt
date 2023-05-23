@@ -3,6 +3,7 @@ package com.dynamitos.mediacloud.data.model
 import android.os.Parcel
 import android.os.Parcelable
 import com.dynamitos.mediacloud.data.Util
+import com.dynamitos.mediacloud.network.BASE_URL
 import com.google.gson.annotations.SerializedName
 
 class UserImage constructor(parcel: Parcel) : Parcelable {
@@ -10,7 +11,7 @@ class UserImage constructor(parcel: Parcel) : Parcelable {
         val name: String? = parcel.readString()
         @SerializedName("imageURL")
         val imgURL: String? = parcel.readString()
-                get() = "${Util.getBaseUrl()}$field"
+                get() = "${BASE_URL}/$field"
         @SerializedName("thumbnailURL")
         val thumbnailURL: String? = parcel.readString()
         @SerializedName("width")
