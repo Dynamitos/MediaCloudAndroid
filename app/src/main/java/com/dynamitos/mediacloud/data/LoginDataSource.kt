@@ -1,8 +1,6 @@
 package com.dynamitos.mediacloud.data
 
 import com.dynamitos.mediacloud.data.model.LoggedInUser
-import com.dynamitos.mediacloud.data.model.UserImageList
-import com.dynamitos.mediacloud.network.NetworkService
 import java.io.IOException
 
 /**

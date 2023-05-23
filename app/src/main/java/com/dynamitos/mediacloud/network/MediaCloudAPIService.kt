@@ -1,9 +1,6 @@
 package com.dynamitos.mediacloud.network
 
 import com.dynamitos.mediacloud.data.model.UserImage
-import com.dynamitos.mediacloud.data.model.UserImageList
-import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
 
 

@@ -5,22 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dynamitos.mediacloud.R
-import com.dynamitos.mediacloud.data.Util
 import com.dynamitos.mediacloud.data.model.ImageClickListener
 import com.dynamitos.mediacloud.data.model.ImageGalleryViewModel
 import com.dynamitos.mediacloud.data.model.UserImage
 import com.dynamitos.mediacloud.network.APIClient
+import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.launch
+
 
 class GalleryWrapper : Fragment(), ImageClickListener {
     private lateinit var viewModel: ImageGalleryViewModel
     private var images: List<UserImage> = emptyList()
+    private var tabs: TabLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +50,7 @@ class GalleryWrapper : Fragment(), ImageClickListener {
 
             val galleryAdapter = GalleryAdapter(images, listener)
             val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
+            tabs = view.rootView.findViewById<TabLayout>(R.id.tabs)
             val gridLayoutManager = GridLayoutManager(context, 2)
             recyclerView.layoutManager = gridLayoutManager
             recyclerView.adapter = galleryAdapter
@@ -56,13 +60,24 @@ class GalleryWrapper : Fragment(), ImageClickListener {
     override fun onImageClicked(position: Int, image: UserImage, view: ImageView) {
         lifecycleScope.launch {
             val galleryViewPagerFragment = GalleryPager.newInstance(position, images)
+            val detailImage = ImageDetail.newInstance(image, ViewCompat.getTransitionName(view)!!)
 
+            tabs?.visibility = View.GONE
             parentFragmentManager.beginTransaction()
                 .addSharedElement(view, ViewCompat.getTransitionName(view)!!)
                 .addToBackStack(TAG)
                 .replace(R.id.content, galleryViewPagerFragment)
                 .commit()
         }
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true ) {
+                override fun handleOnBackPressed() {
+                    tabs?.visibility = View.VISIBLE
+                    isEnabled = false
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
     companion object {

@@ -28,7 +28,7 @@ class GalleryAdapter(private val imageList: List<UserImage>,
         Glide.with(holder.galleryImageView.context)
             .load(image.imgURL)
             //.thumbnail(0.5f)
-            //.diskCacheStrategy(DiskCacheStrategy.ALL)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(holder.galleryImageView)
 
         ViewCompat.setTransitionName(holder.galleryImageView, image.name)

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.dynamitos.mediacloud.R
@@ -34,13 +35,11 @@ class ImageDetail : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val image = arguments?.getParcelable<UserImage>(IMAGE)
-        val transitionName = arguments?.getString(TRANSITION_NAME)
-
         val imageView = view.findViewById<PhotoView>(R.id.detail_image)
-        imageView.transitionName = transitionName
 
         Glide.with(requireContext())
             .load(image?.imgURL)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(imageView)
             /*.into(object : SimpleTarget<Drawable>() {
                 override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
