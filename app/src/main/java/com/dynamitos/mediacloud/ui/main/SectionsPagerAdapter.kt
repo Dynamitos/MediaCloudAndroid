@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.dynamitos.mediacloud.ui.gallery.GalleryWrapper
 import com.dynamitos.mediacloud.data.Util
+import com.dynamitos.mediacloud.ui.PlaceHolder
 
 //import com.dynamitos.mediacloud.data.R
 
@@ -25,7 +26,10 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
     override fun getItem(position: Int): Fragment {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment.
-        return GalleryWrapper.newInstance()
+        if(position == 0){
+            return GalleryWrapper.newInstance()
+        }
+        return PlaceHolder.newInstance()
     }
 
     override fun getPageTitle(position: Int): CharSequence {
@@ -33,6 +37,6 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
     }
 
     override fun getCount(): Int {
-        return 1
+        return 3
     }
 }

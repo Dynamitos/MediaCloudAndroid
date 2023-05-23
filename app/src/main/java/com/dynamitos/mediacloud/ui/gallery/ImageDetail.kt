@@ -18,7 +18,7 @@ class ImageDetail : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        postponeEnterTransition()
+        //postponeEnterTransition()
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
     }
 
@@ -41,12 +41,13 @@ class ImageDetail : Fragment() {
 
         Glide.with(requireContext())
             .load(image?.imgURL)
-            .into(object : SimpleTarget<Drawable>() {
+            .into(imageView)
+            /*.into(object : SimpleTarget<Drawable>() {
                 override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
                     startPostponedEnterTransition()
                     imageView.setImageDrawable(resource)
                 }
-            })
+            })*/
     }
 
     companion object {
