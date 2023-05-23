@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 const val BASE_URL = "http://192.168.57.251:3000"
 
 object APIClient {
-    private const val token: String = "271bc5b649181d96cb7d871a3e30eb5cbad7b91e526be9bcefddda6b5dc5b9c56706cf5152143ffcc49753566e6052968e90e4ddb44ff4a8500f1a38b1d6e4e2";
+    const val token: String = "271bc5b649181d96cb7d871a3e30eb5cbad7b91e526be9bcefddda6b5dc5b9c56706cf5152143ffcc49753566e6052968e90e4ddb44ff4a8500f1a38b1d6e4e2";
     val apiService: MediaCloudAPIService
 
     init {

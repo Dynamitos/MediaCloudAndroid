@@ -9,10 +9,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.dynamitos.mediacloud.R
 import com.dynamitos.mediacloud.data.model.UserImage
+import com.dynamitos.mediacloud.network.APIClient
 import com.github.chrisbanes.photoview.PhotoView
 
 class ImageDetail : Fragment() {
@@ -37,8 +40,12 @@ class ImageDetail : Fragment() {
         val image = arguments?.getParcelable<UserImage>(IMAGE)
         val imageView = view.findViewById<PhotoView>(R.id.detail_image)
 
+        val glideUrl = GlideUrl(image?.imgURL, LazyHeaders.Builder()
+            .addHeader("Authorization", APIClient.token)
+            .build())
+
         Glide.with(requireContext())
-            .load(image?.imgURL)
+            .load(glideUrl)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(imageView)
             /*.into(object : SimpleTarget<Drawable>() {

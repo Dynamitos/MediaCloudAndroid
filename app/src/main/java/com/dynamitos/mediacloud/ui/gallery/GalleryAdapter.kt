@@ -8,9 +8,12 @@ import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
 import com.dynamitos.mediacloud.R
 import com.dynamitos.mediacloud.data.model.ImageClickListener
 import com.dynamitos.mediacloud.data.model.UserImage
+import com.dynamitos.mediacloud.network.APIClient
 
 class GalleryAdapter(private val imageList: List<UserImage>,
                      private val listener: ImageClickListener
@@ -25,8 +28,12 @@ class GalleryAdapter(private val imageList: List<UserImage>,
     override fun onBindViewHolder(holder: GalleryViewHolder, position: Int) {
         val image = imageList[position]
 
+        val glideUrl = GlideUrl(image.imgURL, LazyHeaders.Builder()
+            .addHeader("Authorization", APIClient.token)
+            .build())
+
         Glide.with(holder.galleryImageView.context)
-            .load(image.imgURL)
+            .load(glideUrl)
             //.thumbnail(0.5f)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(holder.galleryImageView)
