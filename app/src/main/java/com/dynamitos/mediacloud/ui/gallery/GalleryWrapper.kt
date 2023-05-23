@@ -16,6 +16,7 @@ import com.dynamitos.mediacloud.data.model.ImageClickListener
 import com.dynamitos.mediacloud.data.model.ImageGalleryViewModel
 import com.dynamitos.mediacloud.data.model.UserImage
 import com.dynamitos.mediacloud.network.APIClient
+import com.dynamitos.mediacloud.ui.LockableViewPager
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.launch
 
@@ -23,7 +24,6 @@ import kotlinx.coroutines.launch
 class GalleryWrapper : Fragment(), ImageClickListener {
     private lateinit var viewModel: ImageGalleryViewModel
     private var images: List<UserImage> = emptyList()
-    private var tabs: TabLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +50,6 @@ class GalleryWrapper : Fragment(), ImageClickListener {
 
             val galleryAdapter = GalleryAdapter(images, listener)
             val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
-            tabs = view.rootView.findViewById<TabLayout>(R.id.tabs)
             val gridLayoutManager = GridLayoutManager(context, 2)
             recyclerView.layoutManager = gridLayoutManager
             recyclerView.adapter = galleryAdapter
@@ -58,9 +57,11 @@ class GalleryWrapper : Fragment(), ImageClickListener {
     }
 
     override fun onImageClicked(position: Int, image: UserImage, view: ImageView) {
+        val viewPager = view.rootView.findViewById<LockableViewPager>(R.id.view_pager)
+        val tabs = view.rootView.findViewById<TabLayout>(R.id.tabs)
+
         lifecycleScope.launch {
             val galleryViewPagerFragment = GalleryPager.newInstance(position, images)
-            val detailImage = ImageDetail.newInstance(image, ViewCompat.getTransitionName(view)!!)
 
             tabs?.visibility = View.GONE
             parentFragmentManager.beginTransaction()
@@ -68,12 +69,14 @@ class GalleryWrapper : Fragment(), ImageClickListener {
                 .addToBackStack(TAG)
                 .replace(R.id.content, galleryViewPagerFragment)
                 .commit()
+            viewPager.isPagingEnabled = false
         }
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true ) {
                 override fun handleOnBackPressed() {
                     tabs?.visibility = View.VISIBLE
                     parentFragmentManager.popBackStack()
+                    viewPager.isPagingEnabled = true
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
