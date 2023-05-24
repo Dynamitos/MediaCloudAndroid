@@ -4,13 +4,16 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
+import com.dynamitos.mediacloud.R
 import com.dynamitos.mediacloud.data.LoginRepository
 import com.dynamitos.mediacloud.databinding.ActivityMainBinding
 import com.dynamitos.mediacloud.ui.login.LoginActivity
+import com.google.android.material.progressindicator.CircularProgressIndicator
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,11 +24,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        Thread.sleep(1000)
+
         val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
         val viewPager: ViewPager = binding.viewPager
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = binding.tabs
         tabs.setupWithViewPager(viewPager)
+
+        findViewById<CircularProgressIndicator>(R.id.main_load_bar).visibility = View.GONE
     }
 
     private fun resetData(sp: SharedPreferences){
