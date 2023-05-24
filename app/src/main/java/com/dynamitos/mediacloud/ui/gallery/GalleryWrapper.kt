@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dynamitos.mediacloud.R
+import com.dynamitos.mediacloud.data.LoginRepository
 import com.dynamitos.mediacloud.data.model.ImageClickListener
 import com.dynamitos.mediacloud.data.model.ImageGalleryViewModel
 import com.dynamitos.mediacloud.data.model.UserImage
@@ -46,7 +47,7 @@ class GalleryWrapper : Fragment(), ImageClickListener {
         super.onViewCreated(view, savedInstanceState)
         val listener = this
         lifecycleScope.launch {
-            images = APIClient.apiService.getImages("Dynamitos", "1")
+            images = APIClient.apiService.getImages(LoginRepository.getInstance().user?.displayName!!, "")
 
             val galleryAdapter = GalleryAdapter(images, listener)
             val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)

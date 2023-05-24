@@ -1,16 +1,22 @@
 package com.dynamitos.mediacloud.ui.gallery
 
+import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.view.ViewCompat
+import com.bumptech.glide.module.AppGlideModule
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.LazyHeaders
 import com.dynamitos.mediacloud.R
+import com.dynamitos.mediacloud.data.GalleryGlideModule
 import com.dynamitos.mediacloud.data.model.ImageClickListener
 import com.dynamitos.mediacloud.data.model.UserImage
 import com.dynamitos.mediacloud.network.APIClient
@@ -32,10 +38,18 @@ class GalleryAdapter(private val imageList: List<UserImage>,
             .addHeader("Authorization", APIClient.token)
             .build())
 
+        val circularProgressDrawable = CircularProgressDrawable(holder.galleryImageView.context)
+        circularProgressDrawable.strokeWidth = 5f
+        circularProgressDrawable.centerRadius = 30f
+        circularProgressDrawable.start()
+
         Glide.with(holder.galleryImageView.context)
             .load(glideUrl)
             //.thumbnail(0.5f)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .placeholder(circularProgressDrawable)
+            .error(ColorDrawable(Color.RED))
+            .fallback(ColorDrawable(Color.GRAY))
             .into(holder.galleryImageView)
 
         ViewCompat.setTransitionName(holder.galleryImageView, image.name)

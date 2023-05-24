@@ -1,5 +1,7 @@
 package com.dynamitos.mediacloud.data
 
+import android.content.Context
+import android.content.SharedPreferences
 import com.dynamitos.mediacloud.data.model.LoggedInUser
 
 /**
@@ -7,7 +9,7 @@ import com.dynamitos.mediacloud.data.model.LoggedInUser
  * maintains an in-memory cache of login status and user credentials information.
  */
 
-class LoginRepository(val dataSource: LoginDataSource) {
+class LoginRepository private constructor(val dataSource: LoginDataSource) {
 
     // in-memory cache of the loggedInUser object
     var user: LoggedInUser? = null
@@ -33,9 +35,30 @@ class LoginRepository(val dataSource: LoginDataSource) {
         return result
     }
 
+    fun attemptLoginFromPrefs(prefs: SharedPreferences): Boolean{
+        val authToken = prefs.getString("auth_token", "")
+        val displayName = prefs.getString("display_name", "")
+        if(authToken != "" && displayName != ""){
+            setLoggedInUser(LoggedInUser(authToken!!, displayName!!))
+            return true
+        }
+        return false
+    }
+
     private fun setLoggedInUser(loggedInUser: LoggedInUser) {
         this.user = loggedInUser
         // If user credentials will be cached in local storage, it is recommended it be encrypted
         // @see https://developer.android.com/training/articles/keystore
+    }
+
+    companion object {
+        @Volatile
+        private var instance: LoginRepository? = null
+
+        fun getInstance(): LoginRepository {
+            return instance ?: synchronized(this) {
+                instance ?: LoginRepository(LoginDataSource()).also { instance = it }
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.dynamitos.mediacloud.ui.login
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -16,6 +17,7 @@ import android.widget.Toast
 import com.dynamitos.mediacloud.databinding.ActivityLoginBinding
 
 import com.dynamitos.mediacloud.R
+import com.dynamitos.mediacloud.ui.main.MainActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -59,10 +61,10 @@ class LoginActivity : AppCompatActivity() {
             if(loginResult.success != null) {
                 val prefs = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
                 prefs.edit().putString("auth_token", loginResult.success.authToken).apply();
+                prefs.edit().putString("display_name", loginResult.success.displayName).apply();
             }
-            setResult(Activity.RESULT_OK)
-
             //Complete and destroy login activity once successful
+            setResult(RESULT_OK, Intent())
             finish()
         })
 
