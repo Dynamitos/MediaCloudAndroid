@@ -3,6 +3,7 @@ package com.dynamitos.mediacloud.data
 import android.content.Context
 import android.content.SharedPreferences
 import com.dynamitos.mediacloud.data.model.LoggedInUser
+import com.dynamitos.mediacloud.network.APIClient
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -30,6 +31,7 @@ class LoginRepository private constructor(val dataSource: LoginDataSource) {
 
         if (result is Result.Success) {
             setLoggedInUser(result.data)
+            APIClient.getInstance().tokenRetrofit(user!!.authToken)
         }
 
         return result
@@ -40,6 +42,7 @@ class LoginRepository private constructor(val dataSource: LoginDataSource) {
         val displayName = prefs.getString("display_name", "")
         if(authToken != "" && displayName != ""){
             setLoggedInUser(LoggedInUser(authToken!!, displayName!!))
+            APIClient.getInstance().tokenRetrofit(authToken)
             return true
         }
         return false

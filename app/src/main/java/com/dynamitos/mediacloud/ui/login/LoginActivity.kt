@@ -62,10 +62,10 @@ class LoginActivity : AppCompatActivity() {
                 val prefs = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
                 prefs.edit().putString("auth_token", loginResult.success.authToken).apply();
                 prefs.edit().putString("display_name", loginResult.success.displayName).apply();
+                setResult(RESULT_OK, Intent())
+                //Complete and destroy login activity once successful
+                finish()
             }
-            //Complete and destroy login activity once successful
-            setResult(RESULT_OK, Intent())
-            finish()
         })
 
         username.afterTextChanged {

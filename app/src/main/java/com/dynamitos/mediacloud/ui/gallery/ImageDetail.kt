@@ -14,6 +14,7 @@ import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.dynamitos.mediacloud.R
+import com.dynamitos.mediacloud.data.LoginRepository
 import com.dynamitos.mediacloud.data.model.UserImage
 import com.dynamitos.mediacloud.network.APIClient
 import com.github.chrisbanes.photoview.PhotoView
@@ -41,7 +42,7 @@ class ImageDetail : Fragment() {
         val imageView = view.findViewById<PhotoView>(R.id.detail_image)
 
         val glideUrl = GlideUrl(image?.imgURL, LazyHeaders.Builder()
-            .addHeader("Authorization", APIClient.token)
+            .addHeader("Authorization", LoginRepository.getInstance().user!!.authToken)
             .build())
 
         Glide.with(requireContext())

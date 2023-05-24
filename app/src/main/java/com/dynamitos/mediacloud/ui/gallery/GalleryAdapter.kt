@@ -17,7 +17,9 @@ import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.LazyHeaders
 import com.dynamitos.mediacloud.R
 import com.dynamitos.mediacloud.data.GalleryGlideModule
+import com.dynamitos.mediacloud.data.LoginRepository
 import com.dynamitos.mediacloud.data.model.ImageClickListener
+import com.dynamitos.mediacloud.data.model.LoggedInUser
 import com.dynamitos.mediacloud.data.model.UserImage
 import com.dynamitos.mediacloud.network.APIClient
 
@@ -35,7 +37,7 @@ class GalleryAdapter(private val imageList: List<UserImage>,
         val image = imageList[position]
 
         val glideUrl = GlideUrl(image.imgURL, LazyHeaders.Builder()
-            .addHeader("Authorization", APIClient.token)
+            .addHeader("Authorization", LoginRepository.getInstance().user!!.authToken)
             .build())
 
         val circularProgressDrawable = CircularProgressDrawable(holder.galleryImageView.context)

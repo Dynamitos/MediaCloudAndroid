@@ -47,7 +47,8 @@ class GalleryWrapper : Fragment(), ImageClickListener {
         super.onViewCreated(view, savedInstanceState)
         val listener = this
         lifecycleScope.launch {
-            images = APIClient.apiService.getImages(LoginRepository.getInstance().user?.displayName!!, "")
+            val user = LoginRepository.getInstance().user!!
+            images = APIClient.getInstance().apiService.getImages(user.displayName, user.authToken)
 
             val galleryAdapter = GalleryAdapter(images, listener)
             val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
