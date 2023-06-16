@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
+import android.view.View.OnClickListener
+import android.widget.ImageButton
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
@@ -13,6 +15,7 @@ import com.dynamitos.mediacloud.R
 import com.dynamitos.mediacloud.data.LoginRepository
 import com.dynamitos.mediacloud.databinding.ActivityMainBinding
 import com.dynamitos.mediacloud.ui.login.LoginActivity
+import com.dynamitos.mediacloud.ui.upload.UploadActivity
 import com.google.android.material.progressindicator.CircularProgressIndicator
 
 
@@ -61,5 +64,14 @@ class MainActivity : AppCompatActivity() {
         } else {
             setupGallery()
         }
+
+        val buttonSelectImages = findViewById<ImageButton>(R.id.uploadButton)
+        buttonSelectImages.setOnClickListener {
+            val intent = Intent(this, UploadActivity::class.java)
+            startActivity(intent);
+        }
+
     }
+
+
 }

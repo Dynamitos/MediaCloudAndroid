@@ -42,6 +42,15 @@
         android:indeterminate="true"
         app:layout_anchor="@+id/view_pager"
         app:layout_anchorGravity="center"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/uploadButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:clickable="true"
+        android:layout_margin="16dp"
+        android:src="@android:drawable/btn_star" />
     <!--<ImageView
         android:id="@+id/galleryImage"
         android:layout_width="wrap_content"
@@ -51,4 +60,7 @@
         android:scaleType="fitXY"
         android:src="@drawable/sum">
     </ImageView>-->
+
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
