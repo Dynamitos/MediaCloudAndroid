@@ -35,43 +35,116 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/main_load_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        app:layout_anchor="@+id/view_pager_main"
-        app:layout_anchorGravity="center"/>
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/main_load_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:layout_anchor="@+id/view_pager_main"
+            app:layout_anchorGravity="center"/>
+
+    <LinearLayout
+        android:id="@+id/audioPlayerParent"
+        android:layout_width="match_parent"
+        android:layout_height="92dp"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:background="@color/bluish_gray">
+        <ImageButton
+            android:id="@+id/prevBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="#00FFFFFF"
+            android:rotation="-180"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/next" />
+
+        <ImageButton
+            android:id="@+id/pausePlayBtn"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_vertical"
+            android:background="#00FFFFFF"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/pauseplay" />
+
+        <ImageButton
+            android:id="@+id/nextBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="#00FFFFFF"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/next" />
+
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/songNameView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="TextView"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/albumNameView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="TextView"
+                android:textStyle="italic"/>
+
+            <TextView
+                android:id="@+id/artistNameView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="TextView" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/uploadImages"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="23dp"
-        android:clickable="true"
-        android:src="@android:drawable/ic_menu_gallery"
-        app:fabCustomSize="45dp" />
+            android:id="@+id/uploadImages"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="23dp"
+            android:clickable="true"
+            android:src="@android:drawable/ic_menu_gallery"
+            app:fabCustomSize="45dp"
+        app:backgroundTint="@color/purple_500"
+        app:tint="@color/white"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/uploadMusic"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="23dp"
-        android:clickable="true"
-        android:src="@android:drawable/ic_btn_speak_now"
-        app:fabCustomSize="45dp" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/uploadMusic"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="23dp"
+            android:clickable="true"
+            android:src="@android:drawable/ic_btn_speak_now"
+            app:fabCustomSize="45dp"
+            app:backgroundTint="@color/purple_500"
+            app:tint="@color/white"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/uploadVideos"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="23dp"
-        android:clickable="true"
-        android:src="@android:drawable/presence_video_online"
-        app:fabCustomSize="45dp" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/uploadVideos"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="23dp"
+            android:clickable="true"
+            android:src="@android:drawable/presence_video_online"
+            app:fabCustomSize="45dp"
+            app:backgroundTint="@color/purple_500"
+            app:tint="@color/white"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/uploadButton"
@@ -80,7 +153,9 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:clickable="true"
-        android:src="@android:drawable/stat_sys_upload" />
+        android:src="@android:drawable/stat_sys_upload"
+        app:backgroundTint="@color/purple_500"
+        app:tint="@color/white"/>
     <!--<ImageView
         android:id="@+id/galleryImage"
         android:layout_width="wrap_content"

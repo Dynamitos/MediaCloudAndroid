@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.dynamitos.mediacloud.R
 import com.dynamitos.mediacloud.data.LoginRepository
+import com.dynamitos.mediacloud.data.model.AudioPlayer
 import com.dynamitos.mediacloud.databinding.ActivityMainBinding
 import com.dynamitos.mediacloud.ui.login.LoginActivity
 import com.dynamitos.mediacloud.ui.upload.UploadActivity
@@ -41,6 +42,8 @@ class MainActivity : AppCompatActivity() {
         tabs.setupWithViewPager(viewPager)
 
         findViewById<CircularProgressIndicator>(R.id.main_load_bar).visibility = View.GONE
+
+        AudioPlayer.getInstance().initTextFields(findViewById(R.id.audioPlayerParent))
     }
 
     private fun resetData(sp: SharedPreferences){

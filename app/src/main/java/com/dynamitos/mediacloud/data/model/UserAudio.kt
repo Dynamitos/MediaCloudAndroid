@@ -11,7 +11,7 @@ class UserAudio constructor(parcel: Parcel) : Parcelable {
         @SerializedName("artworkURL") val artURL: String? = parcel.readString()
                 get() = "${BASE_URL}/$field"
         @SerializedName("songURL") val songURL: String? = parcel.readString()
-                get() = "${BASE_URL}/$field"
+                //get() = "${BASE_URL}/$field"
         @SerializedName("artist") val artistName: String? = parcel.readString()
         @SerializedName("album") val albumName: String? = parcel.readString()
         @SerializedName("length") val songLength: Int = parcel.readInt()
