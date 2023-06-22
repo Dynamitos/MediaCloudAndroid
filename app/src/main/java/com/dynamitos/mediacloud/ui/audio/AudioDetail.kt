@@ -25,6 +25,7 @@ import kotlinx.coroutines.launch
 
 class AudioDetail : Fragment() {
 
+    private var audio: UserAudio? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //postponeEnterTransition()
@@ -42,7 +43,7 @@ class AudioDetail : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val audio = arguments?.getParcelable<UserAudio>(AUDIO)
+        audio = arguments?.getParcelable<UserAudio>(AUDIO)
         val imageView = view.findViewById<PhotoView>(R.id.detail_audio)
 
         val glideUrl = GlideUrl(audio?.artURL, LazyHeaders.Builder()
@@ -64,25 +65,27 @@ class AudioDetail : Fragment() {
         view.findViewById<TextView>(R.id.artistNameDetail).text = audio?.artistName
         view.findViewById<TextView>(R.id.albumNameDetail).text = audio?.albumName
         view.findViewById<ImageButton>(R.id.detailPausePlay).setOnClickListener {
-            AudioPlayer.getInstance().toggle(audio?.songURL!!, audio.name!!, audio.artistName, audio.albumName, requireContext())
+            AudioPlayer.getInstance().toggle(audio?.songURL!!, audio?.name!!, audio?.artistName, audio?.albumName, requireContext())
         }
         val parent = view.parent as ViewPager
         view.findViewById<ImageButton>(R.id.detailPrev).setOnClickListener {
             val prevItem = parent.currentItem - 1
-            if (prevItem > 0) {
+            if (prevItem >= 0) {
                 parent.currentItem = prevItem
             }
+            view.rootView.findViewById<ImageButton>(R.id.prevBtn).callOnClick()
         }
         view.findViewById<ImageButton>(R.id.detailNext).setOnClickListener {
             val nextItem = parent.currentItem + 1
             if (nextItem < (parent.adapter?.count ?: 0)) {
                 parent.currentItem = nextItem
             }
+            view.rootView.findViewById<ImageButton>(R.id.nextBtn).callOnClick()
         }
 
         //Ensure that we don't actually wait until the audio starts playing
-        val coroutineScope = CoroutineScope(Dispatchers.Main)
-        coroutineScope.launch { AudioPlayer.getInstance().play(audio?.songURL!!, audio.name!!, audio.artistName, audio.albumName, requireContext()) }
+        //val coroutineScope = CoroutineScope(Dispatchers.Main)
+        //coroutineScope.launch { AudioPlayer.getInstance().play(audio?.songURL!!, audio.name!!, audio.artistName, audio.albumName, requireContext()) }
     }
 
     companion object {

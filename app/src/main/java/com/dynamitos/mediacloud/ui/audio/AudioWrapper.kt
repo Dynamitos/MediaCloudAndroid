@@ -71,8 +71,8 @@ class AudioWrapper : Fragment(), AudioClickListener {
             recyclerView.adapter = galleryAdapter
 
             currTrack = 0
-            AudioPlayer.getInstance().play(audios[0].songURL!!, audios[0].name!!, audios[0].artistName, audios[0].albumName, requireContext())
-            AudioPlayer.getInstance().pause()
+            //AudioPlayer.getInstance().play(audios[0].songURL!!, audios[0].name!!, audios[0].artistName, audios[0].albumName, requireContext())
+            //AudioPlayer.getInstance().pause()
 
             view.rootView.findViewById<ImageButton>(R.id.pausePlayBtn).setOnClickListener{
                 AudioPlayer.getInstance().toggle()

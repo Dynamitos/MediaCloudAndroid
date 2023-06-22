@@ -69,27 +69,27 @@ class AudioPlayer private constructor() {
     fun play(url: String, name: String, artist: String?, album: String?, context: Context) {
         stop()
 
-        try {
+
             if(fieldsInitialized){
                 songField?.text = name
                 albumField?.text = album
                 artistField?.text = artist
             }
-            val coroutineScope = CoroutineScope(Dispatchers.Main)
             isPaused = false
-            coroutineScope.launch { mediaPlayer = MediaPlayer()
+
+            mediaPlayer = MediaPlayer()
+            try {
                 mediaPlayer?.setDataSource(context, Uri.parse(url), getHeader())
                 mediaPlayer?.prepare()
                 mediaPlayer?.start()
                 currentUrl = url
-
-                if (isPaused){
-                    pause()
-                }
+            } catch (e: IOException) {
+                e.printStackTrace()
             }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
+
+            if (isPaused){
+                pause()
+            }
     }
 
     fun resume(){
