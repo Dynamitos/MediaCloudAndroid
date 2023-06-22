@@ -5,23 +5,28 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
-import android.view.View.OnClickListener
 import android.widget.ImageButton
 import androidx.activity.result.contract.ActivityResultContracts
-import com.google.android.material.tabs.TabLayout
-import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager.widget.ViewPager
 import com.dynamitos.mediacloud.R
 import com.dynamitos.mediacloud.data.LoginRepository
 import com.dynamitos.mediacloud.databinding.ActivityMainBinding
 import com.dynamitos.mediacloud.ui.login.LoginActivity
 import com.dynamitos.mediacloud.ui.upload.UploadActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.google.android.material.tabs.TabLayout
+
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    lateinit var uploadImages: FloatingActionButton
+    lateinit var uploadVideos: FloatingActionButton
+    lateinit var uploadMusic: FloatingActionButton
+    var isUploadOpen = false
 
     private fun setupGallery(){
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -65,13 +70,41 @@ class MainActivity : AppCompatActivity() {
             setupGallery()
         }
 
-        val buttonSelectImages = findViewById<ImageButton>(R.id.uploadButton)
+        val upload = findViewById<View>(R.id.uploadButton) as FloatingActionButton
+        uploadImages = findViewById<View>(R.id.uploadImages) as FloatingActionButton
+        uploadVideos = findViewById<View>(R.id.uploadVideos) as FloatingActionButton
+        uploadMusic = findViewById<View>(R.id.uploadMusic) as FloatingActionButton
+        upload.setOnClickListener {
+            if (!isUploadOpen) {
+                showUploadMenu()
+            } else {
+                closeUploadMenu()
+            }
+        }
+
+        val buttonSelectImages = findViewById<ImageButton>(R.id.uploadImages)
         buttonSelectImages.setOnClickListener {
             val intent = Intent(this, UploadActivity::class.java)
-            startActivity(intent);
+            startActivity(intent)
         }
 
     }
+
+    private fun showUploadMenu() {
+        isUploadOpen = true
+        uploadImages.animate().translationY(-resources.getDimension(R.dimen.standard_55))
+        uploadVideos.animate().translationY(-resources.getDimension(R.dimen.standard_105))
+        uploadMusic.animate().translationY(-resources.getDimension(R.dimen.standard_155))
+    }
+
+    private fun closeUploadMenu() {
+        isUploadOpen = false
+        uploadImages.animate().translationY(0F)
+        uploadVideos.animate().translationY(0F)
+        uploadMusic.animate().translationY(0F)
+    }
+
+
 
 
 }

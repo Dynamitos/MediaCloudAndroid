@@ -44,13 +44,43 @@
         app:layout_anchorGravity="center"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/uploadImages"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="23dp"
+        android:clickable="true"
+        android:src="@android:drawable/ic_menu_gallery"
+        app:fabCustomSize="45dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/uploadMusic"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="23dp"
+        android:clickable="true"
+        android:src="@android:drawable/ic_btn_speak_now"
+        app:fabCustomSize="45dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/uploadVideos"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="23dp"
+        android:clickable="true"
+        android:src="@android:drawable/presence_video_online"
+        app:fabCustomSize="45dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/uploadButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
         android:clickable="true"
-        android:layout_margin="16dp"
-        android:src="@android:drawable/btn_star" />
+        android:src="@android:drawable/stat_sys_upload" />
     <!--<ImageView
         android:id="@+id/galleryImage"
         android:layout_width="wrap_content"
