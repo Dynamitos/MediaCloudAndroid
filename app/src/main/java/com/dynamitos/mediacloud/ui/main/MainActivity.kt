@@ -88,6 +88,21 @@ class MainActivity : AppCompatActivity() {
         val buttonSelectImages = findViewById<ImageButton>(R.id.uploadImages)
         buttonSelectImages.setOnClickListener {
             val intent = Intent(this, UploadActivity::class.java)
+            intent.putExtra("type",0)
+            startActivity(intent)
+        }
+
+        val buttonSelectMusic = findViewById<ImageButton>(R.id.uploadMusic)
+        buttonSelectMusic.setOnClickListener {
+            val intent = Intent(this, UploadActivity::class.java)
+            intent.putExtra("type",1)
+            startActivity(intent)
+        }
+
+        val buttonSelectVideos = findViewById<ImageButton>(R.id.uploadVideos)
+        buttonSelectVideos.setOnClickListener {
+            val intent = Intent(this, UploadActivity::class.java)
+            intent.putExtra("type",2)
             startActivity(intent)
         }
 

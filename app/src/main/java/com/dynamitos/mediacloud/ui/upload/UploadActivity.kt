@@ -6,25 +6,43 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.core.net.toFile
 import androidx.lifecycle.lifecycleScope
 import com.dynamitos.mediacloud.R
 import com.dynamitos.mediacloud.data.model.UploadImage
 import com.dynamitos.mediacloud.network.APIClient
+import com.dynamitos.mediacloud.ui.main.MainActivity
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import kotlin.random.Random
 
 class UploadActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent,"Select Pictures"),1)
+        setContentView(R.layout.activity_main)
+        val uploadIntent = Intent()
+        when (intent.extras?.getInt("type") ?: 0) {
+            0 -> {
+                uploadIntent.type = "image/*"
+                uploadIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                uploadIntent.action = Intent.ACTION_GET_CONTENT
+                startActivityForResult(Intent.createChooser(uploadIntent,"Select Pictures"),1)
+            }
+            1 -> {
+                uploadIntent.type = "gagt/sdf"
+                uploadIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                startActivityForResult(Intent.createChooser(uploadIntent,"Select Files"),1)
+            }
+            2 -> {
+                uploadIntent.type = "gagt/sdf"
+                uploadIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                startActivityForResult(Intent.createChooser(uploadIntent,"Select Files"),1)
+
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -43,6 +61,7 @@ class UploadActivity : AppCompatActivity() {
                     //     iv_image.setImageURI(imageUri) Here you can assign your Image URI to the ImageViews
                 }
                 uploadFile(imageArray)
+
             }
             /*
             else if (data?.data != null) {
@@ -59,7 +78,7 @@ class UploadActivity : AppCompatActivity() {
     }
 
     private fun uploadFile(uri: Array<Uri>) {
-        var imageArray = emptyArray<UploadImage>()
+        var imageArray = emptyList<UploadImage>()
         lifecycleScope.launch {
             for (i in uri.indices)
             {
@@ -68,15 +87,16 @@ class UploadActivity : AppCompatActivity() {
                     MediaType.parse("image/*"),
                     stream.readBytes()
                 ) // read all bytes using kotlin extension
+                val filename = Random.nextInt(100000,999999)
                 val filePart = MultipartBody.Part.createFormData(
                     "file",
-                    "test.jpg",
+                    "$filename.jpg",
                     request
                 )
                 APIClient.getInstance().apiService.uploadPhash(filePart)
 
                 val exif = ExifInterface(stream)
-                val name = exif.getAttribute(ExifInterface.TAG_FILE_SOURCE)
+                val name = "$filename.jpg"
                 val width = exif.getAttribute(ExifInterface.TAG_IMAGE_WIDTH)
                 val height = exif.getAttribute(ExifInterface.TAG_IMAGE_LENGTH)
                 imageArray += UploadImage(name?: "", width?.toInt() ?: 0, height?.toInt() ?: 0,"")
