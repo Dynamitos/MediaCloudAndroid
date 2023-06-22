@@ -5,15 +5,36 @@ import android.os.Parcelable
 import com.dynamitos.mediacloud.data.Util
 import com.dynamitos.mediacloud.network.BASE_URL
 import com.google.gson.annotations.SerializedName
+import java.net.URLDecoder
 
 class UserAudio constructor(parcel: Parcel) : Parcelable {
         @SerializedName("name") val name: String? = parcel.readString()
+                get(){
+                        if(field != null){
+                                return field.removeSuffix(".mp3")
+                        }
+                        return "Unknown"
+                }
         @SerializedName("artworkURL") val artURL: String? = parcel.readString()
-                get() = "${BASE_URL}/$field"
+                get() = "${BASE_URL}$field"
         @SerializedName("songURL") val songURL: String? = parcel.readString()
-                //get() = "${BASE_URL}/$field"
+                get() = "${BASE_URL}$field"
         @SerializedName("artist") val artistName: String? = parcel.readString()
+                get() {
+                        return if(field == null || field.trim() == "") {
+                                "Unknown"
+                        } else {
+                                field
+                        }
+                }
         @SerializedName("album") val albumName: String? = parcel.readString()
+                get() {
+                        return if(field == null || field.trim() == "") {
+                                "Unknown"
+                        } else {
+                                field
+                        }
+                }
         @SerializedName("length") val songLength: Int = parcel.readInt()
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {

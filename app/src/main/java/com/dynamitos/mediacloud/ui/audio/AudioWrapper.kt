@@ -62,7 +62,7 @@ class AudioWrapper : Fragment(), AudioClickListener {
         val listener = this
         lifecycleScope.launch {
             val user = LoginRepository.getInstance().user!!
-            audios = getAudio(user.displayName, user.authToken)
+            audios = APIClient.getInstance().apiService.getMusic(user.displayName, user.authToken)
 
             val galleryAdapter = AudioAdapter(audios, listener)
             val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_audio)
@@ -71,7 +71,7 @@ class AudioWrapper : Fragment(), AudioClickListener {
             recyclerView.adapter = galleryAdapter
 
             currTrack = 0
-            AudioPlayer.getInstance().play(audios[0].songURL!!, audios[0].name!!, audios[0].artistName!!, audios[0].albumName!!)
+            AudioPlayer.getInstance().play(audios[0].songURL!!, audios[0].name!!, audios[0].artistName, audios[0].albumName, requireContext())
             AudioPlayer.getInstance().pause()
 
             view.rootView.findViewById<ImageButton>(R.id.pausePlayBtn).setOnClickListener{
@@ -81,14 +81,14 @@ class AudioWrapper : Fragment(), AudioClickListener {
                 if(currTrack > 0) {
                     currTrack--
                     AudioPlayer.getInstance().play(audios[currTrack].songURL!!, audios[currTrack].name!!,
-                        audios[currTrack].artistName!!, audios[currTrack].albumName!!)
+                        audios[currTrack].artistName, audios[currTrack].albumName, requireContext())
                 }
             }
             view.rootView.findViewById<ImageButton>(R.id.nextBtn).setOnClickListener{
                 if(currTrack < audios.size - 1) {
                     currTrack++
                     AudioPlayer.getInstance().play(audios[currTrack].songURL!!, audios[currTrack].name!!,
-                        audios[currTrack].artistName!!, audios[currTrack].albumName!!)
+                        audios[currTrack].artistName, audios[currTrack].albumName, requireContext())
                 }
             }
         }

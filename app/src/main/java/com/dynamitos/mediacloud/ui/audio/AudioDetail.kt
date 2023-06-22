@@ -64,7 +64,7 @@ class AudioDetail : Fragment() {
         view.findViewById<TextView>(R.id.artistNameDetail).text = audio?.artistName
         view.findViewById<TextView>(R.id.albumNameDetail).text = audio?.albumName
         view.findViewById<ImageButton>(R.id.detailPausePlay).setOnClickListener {
-            AudioPlayer.getInstance().toggle(audio?.songURL!!, audio.name!!, audio.artistName!!, audio.albumName!!)
+            AudioPlayer.getInstance().toggle(audio?.songURL!!, audio.name!!, audio.artistName, audio.albumName, requireContext())
         }
         val parent = view.parent as ViewPager
         view.findViewById<ImageButton>(R.id.detailPrev).setOnClickListener {
@@ -82,7 +82,7 @@ class AudioDetail : Fragment() {
 
         //Ensure that we don't actually wait until the audio starts playing
         val coroutineScope = CoroutineScope(Dispatchers.Main)
-        coroutineScope.launch { AudioPlayer.getInstance().play(audio?.songURL!!, audio.name!!, audio.artistName!!, audio.albumName!!) }
+        coroutineScope.launch { AudioPlayer.getInstance().play(audio?.songURL!!, audio.name!!, audio.artistName, audio.albumName, requireContext()) }
     }
 
     companion object {

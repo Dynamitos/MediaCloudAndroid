@@ -1,9 +1,16 @@
 package com.dynamitos.mediacloud.data.model
 
+import android.content.Context
 import android.media.MediaPlayer
+import android.net.Uri
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import com.dynamitos.mediacloud.R
+import com.dynamitos.mediacloud.data.LoginRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.IOException
 
 class AudioPlayer private constructor() {
@@ -33,13 +40,19 @@ class AudioPlayer private constructor() {
         artistField = parent.findViewById<TextView>(R.id.artistNameView)
     }
 
-    fun toggle(url: String, name: String, artist: String, album: String) {
+    private fun getHeader() : HashMap<String, String>{
+        val headers = HashMap<String, String>()
+        headers["Authorization"] = LoginRepository.getInstance().user!!.authToken
+        return headers
+    }
+
+    fun toggle(url: String, name: String, artist: String?, album: String?, context: Context) {
         if (isPaused && currentUrl == url) {
             resume()
         } else if(currentUrl == url) {
             pause()
         } else {
-            play(url, name, artist, album)
+            play(url, name, artist, album, context)
         }
     }
 
@@ -53,7 +66,7 @@ class AudioPlayer private constructor() {
         }
     }
 
-    fun play(url: String, name: String, artist: String, album: String) {
+    fun play(url: String, name: String, artist: String?, album: String?, context: Context) {
         stop()
 
         try {
@@ -61,14 +74,19 @@ class AudioPlayer private constructor() {
                 songField?.text = name
                 albumField?.text = album
                 artistField?.text = artist
-
             }
-            mediaPlayer = MediaPlayer()
-            mediaPlayer?.setDataSource(url)
-            mediaPlayer?.prepare()
-            mediaPlayer?.start()
-            currentUrl = url
+            val coroutineScope = CoroutineScope(Dispatchers.Main)
             isPaused = false
+            coroutineScope.launch { mediaPlayer = MediaPlayer()
+                mediaPlayer?.setDataSource(context, Uri.parse(url), getHeader())
+                mediaPlayer?.prepare()
+                mediaPlayer?.start()
+                currentUrl = url
+
+                if (isPaused){
+                    pause()
+                }
+            }
         } catch (e: IOException) {
             e.printStackTrace()
         }
@@ -84,10 +102,10 @@ class AudioPlayer private constructor() {
     }
 
     fun pause() {
+        isPaused = true
         mediaPlayer?.let {
             if (it.isPlaying) {
                 it.pause()
-                isPaused = true
             }
         }
     }

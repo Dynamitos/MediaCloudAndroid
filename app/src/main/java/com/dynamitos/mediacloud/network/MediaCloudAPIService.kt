@@ -15,6 +15,9 @@ interface MediaCloudAPIService {
     @GET("/img/{user}")
     suspend fun getImages(@Path("user") username: String, @Header("Authentication") token: String): List<UserImage>
 
+    @GET("/music/{user}")
+    suspend fun getMusic(@Path("user") username: String, @Header("Authentication") token: String): List<UserAudio>
+
     @Multipart
     @POST("/img/phash")
     suspend fun uploadPhash(@Part body: MultipartBody.Part)
