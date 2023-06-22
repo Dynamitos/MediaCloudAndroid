@@ -1,4 +1,4 @@
-package com.dynamitos.mediacloud.ui.gallery
+package com.dynamitos.mediacloud.ui.audio
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -19,7 +19,7 @@ import com.dynamitos.mediacloud.data.model.UserImage
 import com.dynamitos.mediacloud.network.APIClient
 import com.github.chrisbanes.photoview.PhotoView
 
-class ImageDetail : Fragment() {
+class AudioDetail : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,14 +32,14 @@ class ImageDetail : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_image_detail, container, false)
+        return inflater.inflate(R.layout.fragment_audio_detail, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val image = arguments?.getParcelable<UserImage>(IMAGE)
-        val imageView = view.findViewById<PhotoView>(R.id.detail_image)
+        val image = arguments?.getParcelable<UserImage>(AUDIO)
+        val imageView = view.findViewById<PhotoView>(R.id.detail_audio)
 
         val glideUrl = GlideUrl(image?.imgURL, LazyHeaders.Builder()
             .addHeader("Authorization", LoginRepository.getInstance().user!!.authToken)
@@ -58,13 +58,13 @@ class ImageDetail : Fragment() {
     }
 
     companion object {
-        private const val IMAGE = "image_item"
+        private const val AUDIO = "audio_item"
         private const val TRANSITION_NAME = "transition_name"
 
-        fun newInstance(image: UserImage, transitionName: String): ImageDetail {
-            val fragment = ImageDetail()
+        fun newInstance(image: UserImage, transitionName: String): AudioDetail {
+            val fragment = AudioDetail()
             val args = Bundle()
-            args.putParcelable(IMAGE, image)
+            args.putParcelable(AUDIO, image)
             args.putString(TRANSITION_NAME, transitionName)
             fragment.arguments = args
             return fragment

@@ -1,4 +1,4 @@
-package com.dynamitos.mediacloud.ui.gallery
+package com.dynamitos.mediacloud.ui.audio
 
 
 import androidx.fragment.app.Fragment
@@ -6,13 +6,13 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.dynamitos.mediacloud.data.model.UserImage
 
-class GalleryPagerAdapter(fm: FragmentManager, private val images: List<UserImage>) : FragmentStatePagerAdapter(fm) {
+class AudioPagerAdapter(fm: FragmentManager, private val audios: List<UserImage>) : FragmentStatePagerAdapter(fm) {
     override fun getItem(position: Int): Fragment {
-        val image = images[position]
-        return ImageDetail.newInstance(image, image.name!!)
+        val audio = audios[position]
+        return AudioDetail.newInstance(audio, audio.name!!)
     }
 
     override fun getCount(): Int {
-        return images.size
+        return audios.size
     }
 }

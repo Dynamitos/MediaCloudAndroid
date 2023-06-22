@@ -37,7 +37,7 @@ class GalleryPager : Fragment() {
         val images = arguments?.getParcelableArrayList<UserImage>(IMAGES)
         val galleryPagerAdapter = GalleryPagerAdapter(childFragmentManager, images!!.toList())
 
-        val viewPager = view.findViewById<ViewPager>(R.id.view_pager)
+        val viewPager = view.findViewById<ViewPager>(R.id.view_pager_main)
         viewPager.adapter = galleryPagerAdapter
         viewPager.currentItem = currentItem ?: 0
 

@@ -7,12 +7,12 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.dynamitos.mediacloud.ui.gallery.GalleryWrapper
 import com.dynamitos.mediacloud.data.Util
 import com.dynamitos.mediacloud.ui.PlaceHolder
+import com.dynamitos.mediacloud.ui.audio.AudioWrapper
 
 //import com.dynamitos.mediacloud.data.R
 
 private val TAB_TITLES = arrayOf(
     "Images",
-    "Videos",
     "Audio"
 )
 
@@ -28,6 +28,8 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
         // Return a PlaceholderFragment.
         if(position == 0){
             return GalleryWrapper.newInstance()
+        } else if (position == 1) {
+            return AudioWrapper.newInstance()
         }
         return PlaceHolder.newInstance()
     }
@@ -37,6 +39,6 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
     }
 
     override fun getCount(): Int {
-        return 3
+        return 2
     }
 }

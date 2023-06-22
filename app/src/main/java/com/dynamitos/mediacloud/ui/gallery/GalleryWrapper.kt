@@ -59,7 +59,7 @@ class GalleryWrapper : Fragment(), ImageClickListener {
     }
 
     override fun onImageClicked(position: Int, image: UserImage, view: ImageView) {
-        val viewPager = view.rootView.findViewById<LockableViewPager>(R.id.view_pager)
+        val viewPager = view.rootView.findViewById<LockableViewPager>(R.id.view_pager_main)
         val tabs = view.rootView.findViewById<TabLayout>(R.id.tabs)
 
         lifecycleScope.launch {

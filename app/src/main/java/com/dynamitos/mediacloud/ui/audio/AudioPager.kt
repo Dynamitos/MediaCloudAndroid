@@ -1,4 +1,4 @@
-package com.dynamitos.mediacloud.ui.gallery
+package com.dynamitos.mediacloud.ui.audio
 
 import android.os.Bundle
 import android.transition.TransitionInflater
@@ -13,7 +13,7 @@ import com.dynamitos.mediacloud.R
 import com.dynamitos.mediacloud.data.model.UserImage
 
 
-class GalleryPager : Fragment() {
+class AudioPager : Fragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +27,7 @@ class GalleryPager : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_gallery_pager, container, false)
+        return inflater.inflate(R.layout.fragment_audio_pager, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,13 +35,13 @@ class GalleryPager : Fragment() {
 
         val currentItem = arguments?.getInt(INITIAL_POS)
         val images = arguments?.getParcelableArrayList<UserImage>(IMAGES)
-        val galleryPagerAdapter = GalleryPagerAdapter(childFragmentManager, images!!.toList())
+        val galleryPagerAdapter = AudioPagerAdapter(childFragmentManager, images!!.toList())
 
-        val viewPager = view.findViewById<ViewPager>(R.id.view_pager)
+        val viewPager = view.findViewById<ViewPager>(R.id.view_pager_audio)
         viewPager.adapter = galleryPagerAdapter
         viewPager.currentItem = currentItem ?: 0
 
-        view.findViewById<Button>(R.id.close_button).setOnClickListener {
+        view.findViewById<Button>(R.id.close_button_audio).setOnClickListener {
             close()
         }
     }
@@ -50,8 +50,8 @@ class GalleryPager : Fragment() {
         requireActivity().onBackPressedDispatcher.onBackPressed()
     }
     companion object {
-        fun newInstance(curr: Int, images: List<UserImage>): GalleryPager {
-            val fragment = GalleryPager()
+        fun newInstance(curr: Int, images: List<UserImage>): AudioPager {
+            val fragment = AudioPager()
             val args = Bundle()
             args.putInt(INITIAL_POS, curr)
             args.putParcelableArrayList(IMAGES, ArrayList(images))

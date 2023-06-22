@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         Thread.sleep(1000)
 
         val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
-        val viewPager: ViewPager = binding.viewPager
+        val viewPager: ViewPager = binding.viewPagerMain
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = binding.tabs
         tabs.setupWithViewPager(viewPager)

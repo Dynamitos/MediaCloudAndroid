@@ -1,6 +1,5 @@
 package com.dynamitos.mediacloud.ui.gallery
 
-import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
@@ -8,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.view.ViewCompat
-import com.bumptech.glide.module.AppGlideModule
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
@@ -16,12 +14,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.LazyHeaders
 import com.dynamitos.mediacloud.R
-import com.dynamitos.mediacloud.data.GalleryGlideModule
 import com.dynamitos.mediacloud.data.LoginRepository
 import com.dynamitos.mediacloud.data.model.ImageClickListener
-import com.dynamitos.mediacloud.data.model.LoggedInUser
 import com.dynamitos.mediacloud.data.model.UserImage
-import com.dynamitos.mediacloud.network.APIClient
 
 class GalleryAdapter(private val imageList: List<UserImage>,
                      private val listener: ImageClickListener

@@ -1,4 +1,4 @@
-package com.dynamitos.mediacloud.ui.gallery
+package com.dynamitos.mediacloud.ui.audio
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -15,21 +15,22 @@ import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.LazyHeaders
 import com.dynamitos.mediacloud.R
 import com.dynamitos.mediacloud.data.LoginRepository
+import com.dynamitos.mediacloud.data.model.AudioClickListener
 import com.dynamitos.mediacloud.data.model.ImageClickListener
 import com.dynamitos.mediacloud.data.model.UserImage
 
-class GalleryAdapter(private val imageList: List<UserImage>,
-                     private val listener: ImageClickListener
+class AudioAdapter(private val audioList: List<UserImage>,
+                   private val listener: AudioClickListener
 ) :
-    RecyclerView.Adapter<AudioAdapter.GalleryViewHolder>() {
+    RecyclerView.Adapter<AudioAdapter.AudioViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.gallery_image, parent, false)
-        return GalleryViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AudioViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.gallery_audio, parent, false)
+        return AudioViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: GalleryViewHolder, position: Int) {
-        val image = imageList[position]
+    override fun onBindViewHolder(holder: AudioViewHolder, position: Int) {
+        val image = audioList[position]
 
         val glideUrl = GlideUrl(image.imgURL, LazyHeaders.Builder()
             .addHeader("Authorization", LoginRepository.getInstance().user!!.authToken)
@@ -52,7 +53,7 @@ class GalleryAdapter(private val imageList: List<UserImage>,
         ViewCompat.setTransitionName(holder.galleryImageView, image.name)
 
         holder.galleryImageView.setOnClickListener {
-            listener.onImageClicked(
+            listener.onAudioClicked(
                 holder.adapterPosition,
                 image,
                 holder.galleryImageView
@@ -61,10 +62,10 @@ class GalleryAdapter(private val imageList: List<UserImage>,
     }
 
     override fun getItemCount(): Int {
-        return imageList.size
+        return audioList.size
     }
 
-    inner class GalleryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val galleryImageView: ImageView = view.findViewById(R.id.galleryImage)
+    inner class AudioViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val galleryImageView: ImageView = view.findViewById(R.id.audioThumbnail)
     }
 }
