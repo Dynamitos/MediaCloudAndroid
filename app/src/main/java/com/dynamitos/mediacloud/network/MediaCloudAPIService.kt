@@ -21,7 +21,6 @@ interface MediaCloudAPIService {
     @Multipart
     @POST("/img/phash")
     suspend fun uploadPhash(@Part body: MultipartBody.Part)
-
     @POST("/img/upload")
-    suspend fun uploadImages(@Field("images") body: Array<UploadImage> )
+    suspend fun uploadImages(@Body images: List<UploadImage> )
 }
