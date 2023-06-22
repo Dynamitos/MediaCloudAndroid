@@ -73,6 +73,7 @@ class MainActivity : AppCompatActivity() {
             setupGallery()
         }
 
+        /*
         val upload = findViewById<View>(R.id.uploadButton) as FloatingActionButton
         uploadImages = findViewById<View>(R.id.uploadImages) as FloatingActionButton
         uploadVideos = findViewById<View>(R.id.uploadVideos) as FloatingActionButton
@@ -104,7 +105,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, UploadActivity::class.java)
             intent.putExtra("type",2)
             startActivity(intent)
-        }
+        }*/
 
     }
 
