@@ -10,7 +10,7 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.dynamitos.mediacloud.R
-import com.dynamitos.mediacloud.data.model.UserImage
+import com.dynamitos.mediacloud.data.model.UserAudio
 
 
 class AudioPager : Fragment() {
@@ -34,8 +34,8 @@ class AudioPager : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val currentItem = arguments?.getInt(INITIAL_POS)
-        val images = arguments?.getParcelableArrayList<UserImage>(IMAGES)
-        val galleryPagerAdapter = AudioPagerAdapter(childFragmentManager, images!!.toList())
+        val audios = arguments?.getParcelableArrayList<UserAudio>(IMAGES)
+        val galleryPagerAdapter = AudioPagerAdapter(childFragmentManager, audios!!.toList())
 
         val viewPager = view.findViewById<ViewPager>(R.id.view_pager_audio)
         viewPager.adapter = galleryPagerAdapter
@@ -50,7 +50,7 @@ class AudioPager : Fragment() {
         requireActivity().onBackPressedDispatcher.onBackPressed()
     }
     companion object {
-        fun newInstance(curr: Int, images: List<UserImage>): AudioPager {
+        fun newInstance(curr: Int, images: List<UserAudio>): AudioPager {
             val fragment = AudioPager()
             val args = Bundle()
             args.putInt(INITIAL_POS, curr)

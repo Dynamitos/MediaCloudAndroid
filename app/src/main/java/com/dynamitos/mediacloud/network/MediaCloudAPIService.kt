@@ -1,6 +1,7 @@
 package com.dynamitos.mediacloud.network
 
 import com.dynamitos.mediacloud.data.model.UploadImage
+import com.dynamitos.mediacloud.data.model.UserAudio
 import com.dynamitos.mediacloud.data.model.UserImage
 import okhttp3.MultipartBody
 import retrofit2.http.*

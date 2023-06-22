@@ -1,7 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.github.chrisbanes.photoview.PhotoView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/audioGalleryRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@color/white">
+<com.github.chrisbanes.photoview.PhotoView
     android:id="@+id/detail_audio"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:adjustViewBounds="true"
     android:scaleType="fitCenter" />
+
+<TextView
+    android:id="@+id/songNameDetail"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="0"
+    android:gravity="center_horizontal"
+    android:textStyle="bold"
+    android:textSize="30sp"
+    android:maxLines="2"
+    android:ellipsize="end"
+    android:text="Song" />
+<TextView
+    android:id="@+id/albumNameDetail"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="0"
+    android:gravity="center_horizontal"
+    android:textStyle="italic"
+    android:textSize="22sp"
+    android:maxLines="1"
+    android:ellipsize="end"
+    android:text="Album" />
+<TextView
+    android:id="@+id/artistNameDetail"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="0"
+    android:gravity="center_horizontal"
+    android:textSize="22sp"
+    android:maxLines="1"
+    android:ellipsize="end"
+    android:text="Artist" />
+
+</LinearLayout>

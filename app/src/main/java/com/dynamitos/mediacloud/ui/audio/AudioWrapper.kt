@@ -15,8 +15,7 @@ import com.dynamitos.mediacloud.R
 import com.dynamitos.mediacloud.data.LoginRepository
 import com.dynamitos.mediacloud.data.model.AudioClickListener
 import com.dynamitos.mediacloud.data.model.AudioGalleryViewModel
-import com.dynamitos.mediacloud.data.model.ImageClickListener
-import com.dynamitos.mediacloud.data.model.UserImage
+import com.dynamitos.mediacloud.data.model.UserAudio
 import com.dynamitos.mediacloud.network.APIClient
 import com.dynamitos.mediacloud.ui.LockableViewPager
 import com.google.android.material.tabs.TabLayout
@@ -25,7 +24,7 @@ import kotlinx.coroutines.launch
 
 class AudioWrapper : Fragment(), AudioClickListener {
     private lateinit var viewModel: AudioGalleryViewModel
-    private var images: List<UserImage> = emptyList()
+    private var audios: List<UserAudio> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,14 +43,25 @@ class AudioWrapper : Fragment(), AudioClickListener {
         return inflater.inflate(R.layout.fragment_audio_wrapper, container, false)
     }
 
+    suspend fun getAudio(username: String, token: String) : List<UserAudio> {
+        return listOf(
+            UserAudio.createFromParams("Then We Are Decided", "img/Dynamitos/Eden.jpg", "img/Dynamitos/Eden.jpg", "Bob Bingham", "Jesus Christ Superstar", 123),
+            UserAudio.createFromParams("The Man From the Daily Mail", "img/Dynamitos/Mobius.jpg", "img/Dynamitos/Mobius.jpg", "The Rebel Hearts", "Unforgotten Legends", 456),
+            UserAudio.createFromParams("Wellerman", "img/Dynamitos/Kevin.jpg", "img/Dynamitos/Kevin.jpg", "Jonathan Young", "Young's Old Covers (2019-2021)", 789),
+            UserAudio.createFromParams("Then We Are Decided", "img/Dynamitos/Eden.jpg", "img/Dynamitos/Eden.jpg", "Bob Bingham", "Jesus Christ Superstar", 123),
+            UserAudio.createFromParams("The Man From the Daily Mail", "img/Dynamitos/Mobius.jpg", "img/Dynamitos/Mobius.jpg", "The Rebel Hearts", "Unforgotten Legends", 456),
+            UserAudio.createFromParams("Wellerman", "img/Dynamitos/Kevin.jpg", "img/Dynamitos/Kevin.jpg", "Jonathan Young", "Young's Old Covers (2019-2021)", 789),
+            )
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val listener = this
         lifecycleScope.launch {
             val user = LoginRepository.getInstance().user!!
-            images = APIClient.getInstance().apiService.getImages(user.displayName, user.authToken)
+            audios = getAudio(user.displayName, user.authToken)
 
-            val galleryAdapter = AudioAdapter(images, listener)
+            val galleryAdapter = AudioAdapter(audios, listener)
             val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_audio)
             val gridLayoutManager = GridLayoutManager(context, 2)
             recyclerView.layoutManager = gridLayoutManager
@@ -59,12 +69,12 @@ class AudioWrapper : Fragment(), AudioClickListener {
         }
     }
 
-    override fun onAudioClicked(position: Int, image: UserImage, view: ImageView) {
+    override fun onAudioClicked(position: Int, audio: UserAudio, view: ImageView) {
         val viewPager = view.rootView.findViewById<LockableViewPager>(R.id.view_pager_main)
         val tabs = view.rootView.findViewById<TabLayout>(R.id.tabs)
 
         lifecycleScope.launch {
-            val audioViewPagerFragment = AudioPager.newInstance(position, images)
+            val audioViewPagerFragment = AudioPager.newInstance(position, audios)
 
             tabs?.visibility = View.GONE
             parentFragmentManager.beginTransaction()

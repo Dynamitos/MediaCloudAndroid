@@ -4,9 +4,9 @@ package com.dynamitos.mediacloud.ui.audio
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.dynamitos.mediacloud.data.model.UserImage
+import com.dynamitos.mediacloud.data.model.UserAudio
 
-class AudioPagerAdapter(fm: FragmentManager, private val audios: List<UserImage>) : FragmentStatePagerAdapter(fm) {
+class AudioPagerAdapter(fm: FragmentManager, private val audios: List<UserAudio>) : FragmentStatePagerAdapter(fm) {
     override fun getItem(position: Int): Fragment {
         val audio = audios[position]
         return AudioDetail.newInstance(audio, audio.name!!)
